@@ -1,46 +1,42 @@
-# ArsenalBalancer CLI 🚀🎮
+Actúa como un desarrollador experto en Python y Pygame. Crea el desarrollo de un juego de supervivencia zombi estilo "Project Zomboid" en 2D (vista top-down o isométrica simplificada), implementado de forma modular y estructurada.
 
-ArsenalBalancer es una microherramienta de consola (CLI) programada en Python utilizando la biblioteca `openpyxl`. Está diseñada específicamente para optimizar y automatizar el flujo de trabajo de los diseñadores de videojuegos (Game Designers) durante la etapa de balanceo de armamento para juegos de tipo shooter.
+--- CONCEPTO DEL JUEGO: Outbreak: Quarantine Zero ---
+- Vista: Superior / Top-down o isométrica simplificada.
+- Ambientación: Zona en cuarentena post-brote biológico.
+- Mecánicas clave: Gestión de necesidades (salud, hambre, sed, estamina), cono de visión/niebla de guerra, generación de ruido al correr/atacar, inventario por peso y exploración/looting de contenedores.
 
-## 📋 ¿Para qué sirve?
+--- PLAN DE TRABAJO (FASE POR FASE) ---
+Desarrolla la arquitectura del proyecto siguiendo este orden de trabajo:
 
-La herramienta actúa como un puente inteligente entre el diseño conceptual de mecánicas y la base de datos técnica que lee el motor del juego (Unity, Unreal Engine, Godot, etc.). Sus funciones principales son:
+Fase 1: Motor Base y Mapa
+- Bucle principal de Pygame y gestión de delta time (FPS estables).
+- Mapa basado en cuadrícula (Tilemap) que represente paredes, suelos, puertas y contenedores.
+- Sistema de cámara que siga al jugador de forma fluida.
 
-*   **Centralizar el arsenal:** Permite crear, listar y editar de forma rápida la base de datos de armamento desde la terminal.
-*   **Automatizar métricas de combate:** Inyecta fórmulas dinámicas directamente en celdas de Excel para calcular el Daño por Segundo (DPS) real y el tiempo de baja (Time to Kill / TTK).
-*   **Control de calidad visual:** Aplica formatos condicionales y alertas de colores automáticas en la hoja de cálculo cuando un arma se encuentra desbalanceada (ej. si está rota o muy débil).
-*   **Exportación ágil:** Genera archivos nativos `.xlsx` limpios y estructurados, listos para ser importados por los programadores al código del juego.
+Fase 2: Jugador y Físicas
+- Movimiento WASD con aceleración y sistema de estamina (Shift para correr).
+- El personaje rota hacia la posición del cursor del ratón.
+- Colisiones con paredes y obstáculos del Tilemap.
+- Atributos base del jugador: Salud, Estamina, Hambre y Sed.
 
----
+Fase 3: Visibilidad y Sonido
+- Cono de visión (Fog of War) usando raycasting o máscaras de Pygame: las zonas a la espalda del jugador o tras paredes deben quedar en penumbra/oscuridad.
+- Radio de ruido dinámico: caminar genera poco ruido, correr o atacar expande un radio de sonido que alerta a los enemigos cercanos.
 
-## 🛠️ Requisitos e Instalación
+Fase 4: IA de Zombis
+- Estados de IA: Deambular aleatoriamente (Wander), Investigar ruido (Investigate) y Perseguir (Chase).
+- Los zombis detectan al jugador por cono de visión propio o por el radio de ruido generado.
+- Daño por contacto al jugador y sistema de salud/muerte de los zombis.
 
-Para ejecutar esta microherramienta necesitas tener instalado **Python 3.x** y la biblioteca encargada de la manipulación de las hojas de cálculo.
+Fase 5: Sistema de Inventario y Loot
+- Interacción con contenedores del mapa (tecla E).
+- Interfaz gráfica limpia para el inventario con límite de peso.
+- Objetos consumibles funcionales (comida para el hambre, agua para la sed, vendas para restaurar salud).
 
-1. **Clonar o descargar** este repositorio en tu máquina.
-2. **Instalar la dependencia** requerida ejecutando el siguiente comando en tu terminal:
+Fase 6: Pulido Visual
+- Utiliza figuras geométricas básicas (rectángulos, círculos) y colores distintos para que el código sea 100% ejecutable sin assets externos.
 
-```bash
-pip install openpyxl
-```
-
----
-
-## 💻 Instrucciones de Uso
-
-1. Ejecutá el script principal desde la consola:
-   ```bash
-   python main.py
-   ```
-2. El programa validará si existe el archivo de base de datos (`balance_armas.xlsx`). Si no lo encuentra, lo creará automáticamente con la estructura de títulos y estilos base.
-3. Interactuá con el menú de consola para agregar nuevas armas introduciendo sus atributos (Daño base, Cadencia de tiro, Capacidad del cargador).
-4. Abrí el archivo de Excel generado para revisar las estadísticas calculadas dinámicamente y los reportes visuales de balanceo.
-
----
-
-## 📅 Plan de Desarrollo (Cronograma de Trabajo)
-
-*   **Fase 1 (Días 1-2):** Investigación, modelado de variables del shooter y arquitectura de celdas en la hoja de cálculo.
-*   **Fase 2 (Días 3-5):** Configuración del núcleo en Python, integración de `openpyxl` y lógica de inyección de fórmulas de Excel.
-*   **Fase 3 (Días 6-8):** Creación de la interfaz CLI interactiva e implementación de reglas de formato condicional por colores.
-*   **Fase 4 (Días 9-10):** Pruebas de estrés de datos, control de errores (input handling) y entrega de la documentación final para Antigravity.
+--- REQUISITOS DE CÓDIGO ---
+- Código limpio, modular y estructurado en clases (Player, Zombie, TileMap, Inventory, UI, GameEngine).
+- Comentarios explicativos en las secciones complejas (raycasting de visión, lógica de IA y contenedores).
+- Comienza entregando la estructura de archivos/clases y el código ejecutable de la Fase 1 y Fase 2 para probar el movimiento, la cámara y el mapa inicial.
